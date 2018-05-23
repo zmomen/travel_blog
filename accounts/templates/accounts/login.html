@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{%block head %}
+<title>Dusty Traveler | Login </title>
+{% endblock %}
+
+{% block body %}
+<div class="col-sm-8">
+	<h2>Welcome to Dusty Traveler! </h2>
+	<p>
+		Are you curious about a particular city or tourist spot? Are you preparing for a trip somewhere exotic and cool,
+		and looking for some info and recommendations? Read our fun travel blogs from our travelers! Our travelers have
+		so much experience they are <i>dusty</i> from all that traveling!
+ 	
+	</p>
+	<br>
+	<h4>Check out the latest blogs from fellow travellers!</h4>
+	    {% for blog in blogs %}
+	<a href="{% url 'home:view_blog_with_pk' pk=blog.pk %}"><h3> {{ blog.title }}</h3></a>
+	<span> <i>Posted by {{ blog.user.get_full_name }} {{ blog.created }}</i></span>
+	<span>
+		{% for t in blog.tags.all %}
+		<span class="badge alert-warning">{{ t.name }}</span>
+		{% endfor %}
+	</span>
+	<p>{{ blog.blog|safe|truncatewords:50 }}</p>
+	<hr>
+	    {% endfor %}
+
+</div>
+<div class="col-sm-4">
+	<h2>Login</h2>
+	<form method="post">
+		{% csrf_token %}
+		<p style="color: red">{{ errors }}</p>
+		{{ form.as_p }}
+		<!--<p><b>Username: </b><input type="text" name="username" size="20"></p>-->
+		<!--<b><b>Password: </b><input type="password" name="password" size="18"></p>-->
+		<button type="submit" class="btn btn-info">Login</button>
+	</form>
+</div>
+{% endblock %}
+
+{% block dashboard %}
+{% endblock %}

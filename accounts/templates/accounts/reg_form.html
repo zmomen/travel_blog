@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{%block head %}
+<title>Dusty Traveler | Register </title>
+{% endblock %}
+
+{% block body %}
+<div class="container">
+	<h1>Register!</h1>
+	<h2 style="color: red">{{ errors }}</h2>
+	<form method="post">
+		{% csrf_token %}
+		{{ form.as_p }}
+		<button type="submit" class="btn btn-info">Sign up</button>
+	</form>
+</div>
+{% endblock %}
+
