@@ -1,10 +1,10 @@
- TRAVEL BLOG - DUSTY TRAVELER 
+# TRAVEL BLOG - DUSTY TRAVELER 
  README AND INSTALLATION INSTRUCTIONS
 
- Author: Zaid Al-Momen
+# Author: Zaid Al-Momen
  95-882 Enterprise Web Development - Spring 2018. Carnegie Mellon University 
  
- SOURCES AND REFERENCES: 
+# SOURCES AND REFERENCES: 
  
  Django Tutorials
  https://www.youtube.com/watch?v=Fc2O3_2kax8&list=PLw02n0FEB3E3VSHjyYMcFadtQORvl1Ssj
