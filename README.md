@@ -3,7 +3,11 @@
 
 # Author: ZMOMEN
  95-882 Enterprise Web Development - Spring 2018. Carnegie Mellon University 
- 
+
+# Screenshots
+
+![screen1](/demo/screen1.png)
+
 # SOURCES AND REFERENCES: 
  
  Django Tutorials
