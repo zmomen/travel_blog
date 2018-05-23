@@ -1,0 +1,189 @@
+{% extends 'base.html' %}
+{% block head %}
+<title>Dusty Traveler | {% if 'all' in request.path %} All Blogs{% else %}My Blogs {% endif %} </title>
+{% endblock %}
+{% load static %}
+<script src="{% static 'js/fav.js' %}">
+</script>
+
+{% block body%}
+<div class="col-md-8">
+	<h1> {% if 'all' in request.path %} All Blogs{% else %}My Blogs {% endif %} </h1>
+	{% if blogs.count > 1 %}
+	{% for blog in blogs %} <!-- for many blogs -->
+	<a href="{% url 'home:view_blog_with_pk' pk=blog.pk %}"><h3>{{ blog.title }}</h3></a>
+	<h5>{{ blog.public|yesno:"Published,Not Published" }}</h5>
+	<span> <i>Posted by {{ blog.user.get_full_name }} {{ blog.created }}</i>
+	<b id="tot{{ forloop.counter }}"> {{ blog.upvote }} upvote{{ blog.upvote|pluralize }} </b>
+	</span>
+	<span>
+		{% for t in blog.tags.all %}
+		<span class="badge alert-warning">{{ t.name }}</span>
+		{% endfor %} <!-- end for tags -->
+		
+		{% if request.user != blog.user %}
+		<!-- Button trigger modal -->
+		<a class="badge alert-info" data-toggle="modal" data-target="#exampleModal">
+			Add tag
+		</a>
+		<!-- Modal -->
+		<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+		     aria-hidden="true">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content" style="width: 400px;">
+					<div class="modal-footer">
+						<form method="post" action="{% url 'vote:add_tag' blog_pk=blog.pk %}">
+							{% csrf_token %}
+							<span class="form-group">
+						      <input name="newTag" placeholder="Tag..."
+						             class="form-control" style="width:200px" type="text" autofocus="">
+					      
+				        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+				        <button class="btn btn-primary">Add </button>
+					      </span>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+		{% endif %}
+	</span>
+	<p>{{ blog.blog|safe|truncatewords:50 }}</p>
+	<hr>
+	{% endfor %} <!-- end for many blogs -->
+	{% elif blogs.count == 1 %}
+	{% for blog in blogs %} <!-- for one blog -->
+	<a href="{% url 'home:view_blog_with_pk' pk=blog.pk %}"><h3>{{ blog.title }}</h3></a>
+	<h5>{{ blog.public|yesno:"Published,Not Published" }}</h5>
+	<span> <i>Posted by {{ blog.user.get_full_name }} {{ blog.created }}</i>
+	<b id="tot{{ forloop.counter }}"> {{ blog.upvote }} upvote{{ blog.upvote|pluralize }} </b>
+	</span>
+	<span>
+		{% for t in blog.tags.all %}
+		<span class="badge alert-warning">{{ t.name }}
+			{% if request.user != blog.user %}
+			<a style="text-decoration: none" href="{% url 'vote:change_tag' blog_pk=blog.pk tag_name=t.name action='r' %}" type="button">
+				<span aria-hidden="true">&times;</span>
+			</a>
+			{% endif %}
+		</span>
+		{% endfor %} <!-- end for tags -->
+		
+		{% if request.user != blog.user %}
+		<!-- Button trigger modal -->
+		<a class="badge alert-info" data-toggle="modal" data-target="#exampleModal">
+			Add tag
+		</a>
+		<!-- Modal -->
+		<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+		     aria-hidden="true">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content" style="width: 400px;">
+					<div class="modal-footer">
+						<form method="post" action="{% url 'vote:change_tag' blog_pk=blog.pk action='a' %}">
+							{% csrf_token %}
+							<span class="form-group">
+						      <input name="newTag" placeholder="Tag..."
+						             class="form-control" style="width:200px" type="text" autofocus="">
+					      
+				        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+				        <button class="btn btn-primary">Add </button>
+					      </span>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+		{% endif %}
+	</span>
+	<p>{{ blog.blog|safe }}</p>
+	
+	<!-- FAVORITE BLOG -->
+	{% if request.user != blog.user %}
+	{% if blog.pk not in my_faves %}
+	<form id="showFave" action="{% url 'vote:favorite' fave='F' blog_pk=blog.pk %}" method="POST">
+		{% csrf_token %}
+		<p align="right">
+			<button style=" background:none!important;
+				     color:green;
+				     border:none;
+				     padding:0!important;
+				     font: inherit;
+				     /*border is optional*/
+				     cursor: pointer;" type="submit"><b>Favorite!</b>
+			</button>
+		</p>
+	</form>
+	{% else %}
+	<form id="hideFave" action="{% url 'vote:favorite' fave='U' blog_pk=blog.pk %}" method="POST">
+		{% csrf_token %}
+		<p align="right">
+			<button style=" background:none!important;
+				     color:grey;
+				     font-weight: bold;
+				     border:none;
+				     padding:0!important;
+				     font: inherit;
+				     /*border is optional*/
+				     cursor: pointer;" type="submit">Un-Favorite
+			</button>
+		
+		</p>
+	</form>
+	{% endif %}
+	{% endif %}
+	
+	<!-- EDIT THIS BLOG -->
+	{% if blog.user == request.user %}
+	<a href="{% url 'home:edit_blog_with_pk' pk=blog.pk %}">
+		<button type="button" class="btn btn-primary">Edit this blog</button>
+	</a>
+	{% endif %}
+
+		<!-- COMMENT SECTION -->
+	<hr>
+	<form method="post" action="{% url 'home:add_blog_comment' pk=blog.pk %}">
+		{% csrf_token %}
+		{{commentForm.as_p }}
+		<button style="background:none!important;
+				     color:grey;
+				     font-weight: bold;
+				     border:none;
+				     padding:0!important;
+				     font: inherit;
+				     /*border is optional*/
+				     cursor: pointer;" type="submit" class="btn btn-info">Add comment</button>
+	</form>
+	<br>
+	<br>
+	{% for comment in blog.comments.all %}
+		<span>Comment by <strong>{{ comment.user.get_full_name }} </strong>
+			{{ comment.created }}
+		<p>{{ comment.comment|linebreaks }}</p></span>
+	{% empty %}
+		<p>No comments here yet :(</p>
+	{% endfor %} <!-- end for comments -->
+
+
+	{% endfor %} <!-- end for one blog -->
+
+
+	{% else %} <!-- else there are no blogs -->
+	<div class="col-md-8"><h2>{{ errors }}</h2>
+		<br>
+		<h4>Create your blog here:</h4>
+		<br>
+		<form method="post" action="{% url 'home:create_blog' %}" enctype="multipart/form-data">
+			{% csrf_token %}
+			{{ form.as_p }}
+			{{ form.errors }}<br>
+			<button class="btn btn-default" type="submit">Submit</button>
+		</form>
+	</div>
+	{% endif %}
+
+</div>
+{% endblock %}
+
+
+

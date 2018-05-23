@@ -1,0 +1,122 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block body%}
+
+
+<div class="col-md-8">
+	<h1>Latest Blogs</h1>
+	{% for blog in blogs %}
+	<a href="{% url 'home:view_blog_with_pk' pk=blog.pk %}"><h3> {{ blog.title }}</h3></a>
+	{% if request.user != blog.user %}
+	<a style="text-decoration: none;" href="" id="id_upvote{{ forloop.counter }}" type="submit" class="glyphicon glyphicon-arrow-up"
+	   pk="{{blog.pk}}"></a>
+	{%else%}
+	<a style="text-decoration: none; color: grey" class="glyphicon glyphicon-arrow-up"></a>
+	{% endif %}
+	
+	<span> <i>Posted by {{ blog.user.get_full_name }} {{ blog.created }}</i>
+		<b id="tot{{ forloop.counter }}"> {{ blog.upvote }} upvote{{ blog.upvote|pluralize }} </b>
+	</span>
+	<span id="tag">
+		{% for t in blog.tags.all %}
+		<span class="badge alert-warning">{{ t.name }}</span>
+		{% endfor %}
+		
+
+	</span>
+	<p>{{ blog.blog| safe|truncatewords:50 }}</p>
+	{% if request.user != blog.user %}
+	{% if blog.pk not in my_faves %}
+	<form id="showFave" action="{% url 'vote:favorite' fave='F' blog_pk=blog.pk %}" method="POST">
+		{% csrf_token %}
+		<p align="right">
+			<button style=" background:none!important;
+				     color:green;
+				     border:none;
+				     padding:0!important;
+				     font: inherit;
+				     /*border is optional*/
+				     cursor: pointer;" type="submit"><b>Favorite!</b>
+			</button>
+		</p>
+	</form>
+	{% else %}
+	<form id="hideFave" action="{% url 'vote:favorite' fave='U' blog_pk=blog.pk %}" method="POST">
+		{% csrf_token %}
+		<p align="right">
+			<button style=" background:none!important;
+				     color:grey;
+				     font-weight: bold;
+				     border:none;
+				     padding:0!important;
+				     font: inherit;
+				     /*border is optional*/
+				     cursor: pointer;" type="submit">Un-Favorite
+			</button>
+		
+		</p>
+	</form>
+	{% endif %}
+	{% endif %}
+	
+	<hr>
+	{% endfor %}
+	
+	<a href="{% url 'home:all_blogs' %}" style="text-decoration: none;">
+		<h3 style="color: rgb(55, 141, 64);">Explore more blogs...</h3>
+	</a>
+	<br>
+	<br>
+</div>
+
+
+{% endblock %}
+{% block javascript %}
+{{ block.super }}
+
+<script>
+
+
+    $('#id_upvote1').click(function(e){
+    var csrftoken = jQuery("[name=csrfmiddlewaretoken]").val();
+    e.preventDefault();
+    pk = $(this).attr("pk");
+    $.post('/vote/upvote/', {pk: pk, csrfmiddlewaretoken: csrftoken}, function(data){
+	$('#output-box').html(data['vote']);
+	var element = document.getElementById("id_upvote1");
+    element.classList.remove("glyphicon", "glyphicon-arrow-up");
+	element.classList.add('glyphicon', 'glyphicon-circle-arrow-up');
+	$('#tot1').html(data['vote'] + ' upvotes');
+	})
+});
+
+    $('#id_upvote2').click(function(e){
+    var csrftoken = jQuery("[name=csrfmiddlewaretoken]").val();
+    e.preventDefault();
+    pk = $(this).attr("pk");
+    $.post('/vote/upvote/', {pk: pk, csrfmiddlewaretoken: csrftoken}, function(data){
+	$('#output-box').html(data['vote']);
+	var element = document.getElementById("id_upvote2");
+    element.classList.remove("glyphicon", "glyphicon-arrow-up");
+	element.classList.add('glyphicon', 'glyphicon-circle-arrow-up');
+	$('#tot2').html(data['vote'] + ' upvotes');
+	})
+});
+
+    $('#id_upvote3').click(function(e){
+    var csrftoken = jQuery("[name=csrfmiddlewaretoken]").val();
+    e.preventDefault();
+    pk = $(this).attr("pk");
+    $.post('/vote/upvote/', {pk: pk, csrfmiddlewaretoken: csrftoken}, function(data){
+	$('#output-box').html(data['vote']);
+	var element = document.getElementById("id_upvote3");
+    element.classList.remove("glyphicon", "glyphicon-arrow-up");
+	element.classList.add('glyphicon', 'glyphicon-circle-arrow-up');
+	$('#tot3').html(data['vote'] + ' upvotes');
+	})
+});
+
+
+
+</script>
+{% endblock %}
