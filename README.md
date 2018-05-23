@@ -6,7 +6,9 @@
 
 # Screenshots
 
-![screen1](https://github.com/zmomen/travel_blog/blob/master/demo/screen1.PNG| width=100)
+![screen2](https://github.com/zmomen/travel_blog/blob/master/demo/screen2.PNG)
+![screen3](https://github.com/zmomen/travel_blog/blob/master/demo/screen3.PNG)
+
 
 # SOURCES AND REFERENCES: 
  
