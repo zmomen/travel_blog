@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% load static %}
+{%block head %}
+<title>Voting</title>
+<style>
+.mystyle {
+    background-color: coral;
+}
+</style>
+{% endblock %}
+{% block body%}
+
+	
+	{% csrf_token %}
+	<a href="" id="id_upvote" type="submit" class="glyphicon glyphicon-star-empty" pk="1"></a>
+
+
+<!--<script>-->
+<!--var el = document.getElementById('vote-form');-->
+<!--if(el){-->
+<!--el.addEventListener("submit", function(event) {-->
+<!--event.preventDefault();-->
+<!--document.getElementById("id_upvote").value += "Sorry!";-->
+<!--}, false);}-->
+<!--else {-->
+<!--alert('something!')-->
+<!--}</script>-->
+
+
+{% endblock %}
+{% block javascript %}
+{{ block.super }}
+
+<script>
+    console.log("still ready!");
+    $('#id_upvote').click(function(e){
+    var csrftoken = jQuery("[name=csrfmiddlewaretoken]").val();
+    e.preventDefault();
+    pk = $(this).attr("pk");
+    $.post('/vote/upvote/', {pk: pk, csrfmiddlewaretoken: csrftoken}, function(data){
+	$('#output-box').html(data['vote']);
+	var element = document.getElementById("id_upvote");
+    element.classList.remove("glyphicon", "glyphicon-star-empty");
+	element.classList.add('glyphicon', 'glyphicon-star');
+	})
+});
+
+</script>
+{% endblock %}
+
+

@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% block head %}
+<title>Dusty Traveler | My Favorites </title>
+{% endblock %}
+{% load static %}
+<script src="{% static 'js/fav.js' %}">
+</script>
+
+{% block body%}
+
+<div class="col-md-8">
+	<h1>My Favorites</h1>
+	
+	{% for blog in my_favorites %}
+	<a href="{% url 'home:view_blog_with_pk' pk=blog.pk %}"><h3>{{ blog.title }}</h3></a>
+	<span> <i>Posted by {{ blog.user.get_full_name }} {{ blog.created }}</i>
+		<b id="tot{{ forloop.counter }}">
+	{{ blog.upvote }} upvote{{ blog.upvote|pluralize }} </b></span>
+	<span>
+		{% for t in blog.tags.all %}
+		<span class="badge alert-warning">{{ t.name }}</span>
+		{% endfor %}
+	</span>
+	<p>{{ blog.blog|safe|truncatewords:50 }}</p>
+	
+	<form id="hideFave" action="{% url 'vote:favorite' fave='U' blog_pk=blog.pk %}" method="POST">
+		{% csrf_token %}
+		<p align="right">
+			<button style=" background:none!important;
+				     color:grey;
+				     font-weight: bold;
+				     border:none;
+				     padding:0!important;
+				     font: inherit;
+				     /*border is optional*/
+				     cursor: pointer;" type="submit">Un-Favorite
+			</button>
+		
+		</p>
+	</form>
+	
+	<hr>
+	
+	{% endfor %}
+</div>
+{% endblock %}
