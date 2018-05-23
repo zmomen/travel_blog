@@ -1,7 +1,7 @@
 # TRAVEL BLOG - DUSTY TRAVELER 
  README AND INSTALLATION INSTRUCTIONS
 
-# Author: Zaid Al-Momen
+# Author: ZMOMEN
  95-882 Enterprise Web Development - Spring 2018. Carnegie Mellon University 
  
 # SOURCES AND REFERENCES: 
@@ -22,7 +22,7 @@
  https://github.com/alex/django-taggit
 
 
-Intro: 
+# Intro: 
 
 This web project is developed using the python Django Framework. Before installing django, please follow the instructions below for installing Python3, pip3, and virtualenv. Please make sure to install those components in that order, before installing Django.
 
@@ -30,7 +30,7 @@ This web project is developed using the python Django Framework. Before installi
 Note: virtualenv is a python virtual environment package that is very handy. It allows pip to install any packages necessary without worrying about system permissions or user access. Basically, once python3 and pip3 are intalled, the virtual environment can then be activated and used to run this project going forward. This is an important step as it saves a lot of time and effort for installing any future packages.   
 
 
-Installing python3 and pip3: 
+# Installing python3 and pip3: 
 
 Please get the latest python3 version from https://www.python.org/downloads/ and install it on your machine. 
 Then depending on your OS, follow guidelines for installing pip3. 
@@ -48,15 +48,15 @@ virtualenv is a python package that allows the user to work in an isolated pytho
 4. Activating the environment: change to the directory where 'venv' was created and run: source venv/bin/activate
 You should see (venv) in your terminal window like this: 
 
-zaids-air:~ zaidal-momen$ source venv/bin/activate
-(venv) zaids-air:~ zaidal-momen$ 
+$ source venv/bin/activate
+(venv) $ 
 
 This means that you are now working in the python virtual environment. Proceed to the next section to install packages in this venv environment. 
 
 Note: Everytime you stop the django server, restart the machine, turn off the computer, when you come back, you will need to activate the venv environment again by running the command source venv/bin/activate. Remember to always work from within the virtual environment. This project will install django and all the other packages inside the virtual environment.
 
 
-Installing Django. 
+# Installing Django. 
 
 For django, pip has a quick way for intalling it. First make sure you are in the virtual environment and your command prompt should look like 
 source venv/bin/activate
@@ -65,7 +65,7 @@ source venv/bin/activate
 Then, run: pip install django. 
 Once django is installed successfully, proceed to the next section to intall the necessary packages for DUSTY TRAVELER. 
 
-Installing python packages for DUSTY TRAVELER. 
+# Installing python packages for DUSTY TRAVELER. 
 
  The package named are all stored in a file called 'requirements.txt' for ease of install. pip provides an easy way to go through all the packages in that file and install them automatically. The requirements.txt file is included as part of the project deliverable, in the travel_blog.zip file. 
 
@@ -90,7 +90,7 @@ There are three important packages in addition to Django:
 
 You should now have all the packages necessary and you are now ready to deploy and run the DUSTY TRAVELER web project. double check they are installed by running 'pip freeze'
 
-RUNNING DUSTY TRAVELER: 
+# RUNNING DUSTY TRAVELER: 
 
 The DUSTY TRAVELER web project is a django project under the name 'travel_blog'. It is the main folder in the zip file. After following this README.txt and installing django and all other components, you are ready to deploy the travel_blog project. 
 
