@@ -6,7 +6,7 @@
 
 # Screenshots
 
-![screen1](https://github.com/zmomen/travel_blog/blob/master/demo/screen1.PNG =250x250)
+![screen1](https://github.com/zmomen/travel_blog/blob/master/demo/screen1.PNG| width=100)
 
 # SOURCES AND REFERENCES: 
  
