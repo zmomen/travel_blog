@@ -6,7 +6,7 @@
 
 # Screenshots
 
-![screen1](demo/screen1.png)
+![screen1](../demo/screen1.png)
 
 # SOURCES AND REFERENCES: 
  
