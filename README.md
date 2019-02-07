@@ -76,7 +76,7 @@ Once django is installed successfully, proceed to the next section to intall the
  The package named are all stored in a file called 'requirements.txt' for ease of install. pip provides an easy way to go through all the packages in that file and install them automatically. The requirements.txt file is included as part of the project deliverable, in the travel_blog.zip file. 
 
 The requirements.txt contains: 
-Django==2.0.4
+Django==2.1.5
 django-summernote==0.8.8.6
 django-taggit==0.22.2
 Pillow==5.1.0
