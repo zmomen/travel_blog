@@ -1,4 +1,4 @@
-Django==2.0.8
+Django==2.1.5
 django-summernote==0.8.8.6
 django-taggit==0.22.2
 Pillow==5.1.0
